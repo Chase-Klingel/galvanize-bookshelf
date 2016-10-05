@@ -23,7 +23,7 @@ router.get('/books', (_req, res, next) => {
 
 router.get('/books/:id', (req, res, next) => {
   if (!Number.isInteger(':id')) {
-   return next(boom.create(404, 'Not Found'));
+    return next(boom.create(404, 'Not Found'));
   }
 
   knex('books')
@@ -81,7 +81,7 @@ router.post('/books', (req, res, next) => {
 
 router.patch('/books/:id', (req, res, next) => {
   if (!Number.isInteger(':id')) {
-   return next(boom.create(404, 'Not Found'));
+    return next(boom.create(404, 'Not Found'));
   }
 
   knex('books')
@@ -131,7 +131,7 @@ router.patch('/books/:id', (req, res, next) => {
 
 router.delete('/books/:id', (req, res, next) => {
   if (!Number.isInteger(':id')) {
-   return next(boom.create(404, 'Not Found'));
+    return next(boom.create(404, 'Not Found'));
   }
 
   let book;
