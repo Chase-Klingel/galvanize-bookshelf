@@ -13,7 +13,6 @@ router.get('/books', (_req, res, next) => {
   .orderBy('title')
   .then((rows) => {
     const books = camelizeKeys(rows);
-
     res.send(books);
   })
   .catch((err) => {
