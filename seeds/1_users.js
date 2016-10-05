@@ -15,7 +15,7 @@ exports.seed = (knex) => {
     })
     .then(() => {
       return knex.raw(
-        "SELECT setval('users_id_seq', (SELECT MAX(id) FROM books));"
+        "SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));"
       );
     });
 };
