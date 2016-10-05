@@ -21,9 +21,9 @@ router.get('/books', (_req, res, next) => {
 });
 
 router.get('/books/:id', (req, res, next) => {
-  if (!Number.isInteger(':id')) {
-    return next(boom.create(404, 'Not Found'));
-  }
+  // if (!Number.isInteger(':id')) {
+  //   return next(boom.create(404, 'Not Found'));
+  // }
 
   knex('books')
   .where('id', req.params.id)
@@ -46,23 +46,23 @@ router.post('/books', (req, res, next) => {
   const { title, author, genre, description, coverUrl } = req.body;
 
   if (!title || !title.trim()) {
-    return next(boom.create(400, 'Title must not be blank'));
+    return next(boom.badRequest('Title must not be blank'));
   }
 
   if (!author || !author.trim()) {
-    return next(boom.create(400, 'Author must not be blank'));
+    return next(boom.badRequest('Author must not be blank'));
   }
 
   if (!genre || !genre.trim()) {
-    return next(boom.create(400, 'Genre must not be blank'));
+    return next(boom.badRequest('Genre must not be blank'));
   }
 
   if (!description || !description.trim()) {
-    return next(boom.create(400, 'Description must not be blank'));
+    return next(boom.badRequest('Description must not be blank'));
   }
 
   if (!coverUrl || !coverUrl.trim()) {
-    return next(boom.create(400, 'Cover URL must not be blank'));
+    return next(boom.badRequest('Cover URL must not be blank'));
   }
 
   const insertBook = { title, author, genre, description, coverUrl };
@@ -79,9 +79,9 @@ router.post('/books', (req, res, next) => {
 });
 
 router.patch('/books/:id', (req, res, next) => {
-  if (!Number.isInteger(':id')) {
-    return next(boom.create(404, 'Not Found'));
-  }
+  // if (!Number.isInteger(':id')) {
+  //   return next(boom.create(404, 'Not Found'));
+  // }
 
   knex('books')
   .where('id', req.params.id)
@@ -129,9 +129,9 @@ router.patch('/books/:id', (req, res, next) => {
 });
 
 router.delete('/books/:id', (req, res, next) => {
-  if (!Number.isInteger(':id')) {
-    return next(boom.create(404, 'Not Found'));
-  }
+  // if (!Number.isInteger(':id')) {
+  //   return next(boom.create(404, 'Not Found'));
+  // }
 
   let book;
 
