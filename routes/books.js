@@ -13,6 +13,7 @@ router.get('/books', (_req, res, next) => {
   .orderBy('title')
   .then((rows) => {
     const books = camelizeKeys(rows);
+
     res.send(books);
   })
   .catch((err) => {
@@ -21,15 +22,19 @@ router.get('/books', (_req, res, next) => {
 });
 
 router.get('/books/:id', (req, res, next) => {
-  // if (!Number.isInteger(':id')) {
-  //   return next(boom.create(404, 'Not Found'));
-  // }
+  const id = Number.parseInt(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return next();
+  }
 
   knex('books')
-  .where('id', req.params.id)
+  .where('id', id)
   .first()
   .then((row) => {
     if (!row) {
+      /*when you 'throw' an error in then block, promise catches it and places it in the
+        catch handler which then calls 'next(err)' on line 46.*/
       throw boom.create(404, 'Not Found');
     }
 
@@ -79,12 +84,18 @@ router.post('/books', (req, res, next) => {
 });
 
 router.patch('/books/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  if (!Number.isNaN(id)) {
+    return next();
+  }
+
   // if (!Number.isInteger(':id')) {
   //   return next(boom.create(404, 'Not Found'));
   // }
 
   knex('books')
-  .where('id', req.params.id)
+  .where('id', id)
   .first()
   .then((book) => {
     if (!book) {
@@ -94,29 +105,29 @@ router.patch('/books/:id', (req, res, next) => {
     const { title, author, genre, description, coverUrl } = req.body;
     const updateBook = {};
 
-    if (title) {
+    if (title || title.trim()) {
       updateBook.title = title;
     }
 
-    if (author) {
+    if (author || author.trim()) {
       updateBook.author = author;
     }
 
-    if (genre) {
+    if (genre || genre.trim()) {
       updateBook.genre = genre;
     }
 
-    if (description) {
+    if (description || description.trim()) {
       updateBook.description = description;
     }
 
-    if (coverUrl) {
+    if (coverUrl || coverUrl.trim()) {
       updateBook.coverUrl = coverUrl;
     }
 
     return knex('books')
            .update(decamelizeKeys(updateBook), '*')
-           .where('id', req.params.id);
+           .where('id', id);
   })
   .then((rows) => {
     const book = camelizeKeys(rows[0]);
@@ -129,14 +140,16 @@ router.patch('/books/:id', (req, res, next) => {
 });
 
 router.delete('/books/:id', (req, res, next) => {
-  // if (!Number.isInteger(':id')) {
-  //   return next(boom.create(404, 'Not Found'));
-  // }
+  const id = req.params.id;
+
+  if (!Number.isNaN(id)) {
+    return next();
+  }
 
   let book;
 
   knex('books')
-  .where('id', req.params.id)
+  .where('id', id)
   .first()
   .then((row) => {
     if (!row) {
@@ -147,7 +160,7 @@ router.delete('/books/:id', (req, res, next) => {
 
     return knex('books')
            .del()
-           .where('id', req.params.id);
+           .where('id', id);
   })
   .then(() => {
     delete book.id;
