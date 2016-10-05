@@ -22,6 +22,10 @@ router.get('/books', (_req, res, next) => {
 });
 
 router.get('/books/:id', (req, res, next) => {
+  if (!Number.isInteger(':id')) {
+   return next(boom.create(404, 'Not Found'));
+  }
+
   knex('books')
   .where('id', req.params.id)
   .first()
@@ -59,7 +63,7 @@ router.post('/books', (req, res, next) => {
   }
 
   if (!coverUrl || !coverUrl.trim()) {
-    return next(boom.create(400, 'Cover url must not be blank'));
+    return next(boom.create(400, 'Cover URL must not be blank'));
   }
 
   const insertBook = { title, author, genre, description, coverUrl };
@@ -76,6 +80,10 @@ router.post('/books', (req, res, next) => {
 });
 
 router.patch('/books/:id', (req, res, next) => {
+  if (!Number.isInteger(':id')) {
+   return next(boom.create(404, 'Not Found'));
+  }
+
   knex('books')
   .where('id', req.params.id)
   .first()
@@ -122,6 +130,10 @@ router.patch('/books/:id', (req, res, next) => {
 });
 
 router.delete('/books/:id', (req, res, next) => {
+  if (!Number.isInteger(':id')) {
+   return next(boom.create(404, 'Not Found'));
+  }
+
   let book;
 
   knex('books')
