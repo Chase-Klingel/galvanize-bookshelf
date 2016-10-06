@@ -84,15 +84,11 @@ router.post('/books', (req, res, next) => {
 });
 
 router.patch('/books/:id', (req, res, next) => {
-  const id = req.params.id;
+  const id = Number.parseInt(req.params.id);
 
-  if (!Number.isNaN(id)) {
+  if (Number.isNaN(id)) {
     return next();
   }
-
-  // if (!Number.isInteger(':id')) {
-  //   return next(boom.create(404, 'Not Found'));
-  // }
 
   knex('books')
   .where('id', id)
@@ -140,9 +136,9 @@ router.patch('/books/:id', (req, res, next) => {
 });
 
 router.delete('/books/:id', (req, res, next) => {
-  const id = req.params.id;
+  const id = Number.parseInt(req.params.id);
 
-  if (!Number.isNaN(id)) {
+  if (Number.isNaN(id)) {
     return next();
   }
 
