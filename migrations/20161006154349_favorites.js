@@ -8,13 +8,13 @@ exports.up = function(knex) {
       .references('id')
       .inTable('books')
       .onDelete('CASCADE')
-      .index()
+      .index();
     table.integer('user_id')
       .notNullable()
       .references('id')
       .inTable('users')
       .onDelete('CASCADE')
-      .index()
+      .index();
     table.timestamps(true, true);
   });
 };

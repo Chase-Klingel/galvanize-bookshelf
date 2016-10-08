@@ -1,5 +1,6 @@
 'use strict';
 
+/* eslint-disable camelcase, max-len */
 exports.seed = (knex) => {
   return knex('users').del()
     .then(() => {

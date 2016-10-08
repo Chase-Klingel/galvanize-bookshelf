@@ -33,8 +33,8 @@ router.get('/books/:id', (req, res, next) => {
   .first()
   .then((row) => {
     if (!row) {
-      /*when you 'throw' an error in then block, promise catches it and places it in the
-        catch handler which then calls 'next(err)' on line 46.*/
+      /* when you 'throw' an error in then block, promise catches it and places
+      it in the catch handler which then calls 'next(err)' on line 46. */
       throw boom.create(404, 'Not Found');
     }
 
@@ -76,6 +76,7 @@ router.post('/books', (req, res, next) => {
   .insert(decamelizeKeys(insertBook), '*')
   .then((rows) => {
     const book = camelizeKeys(rows[0]);
+
     res.send(book);
   })
   .catch((err) => {
