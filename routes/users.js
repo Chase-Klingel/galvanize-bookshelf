@@ -55,38 +55,6 @@ router.post('/users', (req, res, next) => {
     .catch((err) => {
       next(err);
     });
-
-  // knex('users')
-  //   .select('email')
-  //   .then((emailList) => {
-  //     const emails = camelizeKeys(emailList);
-  //
-  //     emails.forEach((element) => {
-  //       if (element.email === email) {
-  //         return next(boom.create(400, 'Email already exists'));
-  //       }
-  //     });
-  //
-  //     bcrypt.hash(password, 12)
-  //       .then((hashedPassword) => {
-  //         const insertUser = { firstName, lastName, email, hashedPassword };
-  //
-  //         return knex('users').insert(decamelizeKeys(insertUser), '*');
-  //       })
-  //       .then((rows) => {
-  //         const user = camelizeKeys(rows[0]);
-  //
-  //         delete user.hashedPassword;
-  //
-  //         res.send(user);
-  //       })
-  //       .catch((err) => {
-  //         next(err);
-  //       });
-  //   })
-  //   .catch((err) => {
-  //     next(err);
-  //   });
 });
 
 module.exports = router;
