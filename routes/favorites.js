@@ -64,12 +64,12 @@ router.post('/favorites', authorization, (req, res, next) => {
 
   return knex('favorites')
     .insert(decamelizeKeys(insertBook), '*')
-    .then((row) => {
-      if (!row) {
+    .then((rows) => {
+      if (!rows) {
         throw next(boom.create(404, 'Book not found'));
       }
 
-      const book = camelizeKeys(row[0]);
+      const book = camelizeKeys(rows[0]);
 
       res.send(book);
     })
